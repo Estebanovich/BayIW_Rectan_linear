@@ -6,6 +6,10 @@ mitgcmuv
 run_expand/STDOUT.*
 run_expand_nobay/STDOUT.*
 run_expand_nobay/statsMIT.txt
+compress_nc.sh
+lista_nc.txt
+monitorMITgcm
+statsMIT.txt
 run_expand_nobay/output_all.txt
 run_expand/output_all.txt
 run_expand_nobay/output.txt
