@@ -1,0 +1,69 @@
+#!/bin/sh
+
+# Extract variables and save in file. Print name of variable to separate rows.
+#echo 'time_tsnumber' > statsMIT.txt
+grep ' time_tsnumber' "$1" | awk '{print $6} 
+END {
+      print ""; # Add an empty line 
+  }' > statsMIT.txt
+
+AR=(
+' time_secondsf'
+' dynstat_eta_max'      
+' dynstat_eta_min'      
+' dynstat_eta_mean'     
+' dynstat_eta_sd'            
+' dynstat_uvel_max'     
+' dynstat_uvel_min'     
+' dynstat_uvel_mean'    
+' dynstat_uvel_sd'        
+' dynstat_vvel_max'     
+' dynstat_vvel_min'     
+' dynstat_vvel_mean'    
+' dynstat_vvel_sd'      
+' dynstat_wvel_max'     
+' dynstat_wvel_min'     
+' dynstat_wvel_mean'    
+' dynstat_wvel_sd'        
+' dynstat_theta_max'    
+' dynstat_theta_min'    
+' dynstat_theta_mean'   
+' dynstat_theta_sd'       
+' dynstat_salt_max'     
+' dynstat_salt_min'     
+' dynstat_salt_mean'    
+' dynstat_salt_sd'      
+' trAdv_CFL_u_max'      
+' trAdv_CFL_v_max'      
+' trAdv_CFL_w_max'      
+' advcfl_uvel_max'     
+' advcfl_vvel_max'      
+' advcfl_wvel_max'      
+' advcfl_W_hf_max'      
+' pe_b_mean'            
+' ke_max'               
+' ke_mean'              
+' ke_vol'               
+' vort_r_min'           
+' vort_r_max'           
+' vort_a_mean'          
+' vort_a_sd'            
+' vort_p_mean'          
+' vort_p_sd'            
+' surfExpan_theta_mean' 
+' surfExpan_salt_mean'       
+)
+
+for var in "${AR[@]}"; do
+  # Find lines containing the variable
+  grep "$var" "$1" | awk '
+  {
+      if (NF >= 6)  # Ensure there are at least 6 fields
+          print $6; # Print the 6th word
+  }
+  END {
+      print ""; # Add an empty line after processing each variable
+  }' >> statsMIT.txt
+done
+
+
