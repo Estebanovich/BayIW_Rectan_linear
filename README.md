@@ -76,7 +76,7 @@ Open boundaries are applied on the south, west, and east edges using **Orlanski 
 
 ### Forcing
 
-- **Wind**: Periodic meridional wind forcing applied in stage 1 only (period = 1200 s, cycle = 216 000 s)
+- **Wind**: Periodic meridional wind forcing applied in stage 1 only (period = 1200 s, cycle = 216 000 s)(`make_wind_forcing_local.ipynb`)
 - **Initial temperature**: Linear stratification profile (`linear_temp_50zlev_560x352.bin`)
 - **Initial salinity**: Constant (`linear_salt_50zlev_560x352.bin`)
 
@@ -232,4 +232,4 @@ Internal waves are gravity waves that propagate along density interfaces in the 
 
 ## Author
 
-Master's Degree Thesis — *[University name]*
+Esteban Cruz Isidro
