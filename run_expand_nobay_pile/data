@@ -48,19 +48,17 @@
  cg2dMaxIters=1000,
  &
 
-# Time stepping parameters  -- ETAPA 2: reinicia desde pickup.0000007200, sin viento
+# Time stepping parameters -- UNA ETAPA: desde cero con columna apilada (pSurfInit), sin viento
  &PARM03
- startTime=216000.,
+ startTime=0.,
  endTime=432000.,
- nIter0=7200,
+ nIter0=0,
  deltaT=30.,
- chkptFreq=86400.,
+ pChkptFreq=216000.,
+ chkptFreq=0.,
  dumpFreq=900.,
  monitorFreq=600.,
  monitorSelect=2,
-# periodicExternalForcing=.TRUE.,
-# externForcingPeriod=1200.,
-# externForcingCycle=216000.,
  &
 
 # Gridding parameters
@@ -82,5 +80,6 @@
 
  &PARM05
  bathyFile='../input/nobahia_01_expand_bat.bin',
+ pSurfInitFile='../input/pile_init_nobahia_560x352.bin',
  hydrogThetaFile='../input/linear_temp_50zlev_560x352.bin',
  &

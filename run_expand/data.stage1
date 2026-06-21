@@ -48,19 +48,20 @@
  cg2dMaxIters=1000,
  &
 
-# Time stepping parameters  -- ETAPA 2: reinicia desde pickup.0000007200, sin viento
+# Time stepping parameters  -- ETAPA 1: desde cero, forzada por viento
  &PARM03
- startTime=216000.,
- endTime=432000.,
- nIter0=7200,
+ startTime=0.,
+ endTime=216000.,
+ nIter0=0,
  deltaT=30.,
- chkptFreq=86400.,
+ pChkptFreq=216000.,
+ chkptFreq=0.,
  dumpFreq=900.,
  monitorFreq=600.,
  monitorSelect=2,
-# periodicExternalForcing=.TRUE.,
-# externForcingPeriod=1200.,
-# externForcingCycle=216000.,
+ periodicExternalForcing=.TRUE.,
+ externForcingPeriod=1200.,
+ externForcingCycle=216000.,
  &
 
 # Gridding parameters
@@ -76,11 +77,13 @@
 	13.2, 14.3, 15.4, 16.7, 18.0, 19.5, 21.1, 22.8,
 	24.6, 26.6, 28.8, 31.1, 33.7, 36.4, 39.3, 42.5,
 	45.8,
- delYFile = '../input/nobahia_01_expand_dy.bin',
- delXFile = '../input/nobahia_01_expand_dx.bin',
+ delYFile = '../input/bahia_01_expand_dy.bin',
+ delXFile = '../input/bahia_01_expand_dx.bin',
  &
 
  &PARM05
- bathyFile='../input/nobahia_01_expand_bat.bin',
+ bathyFile='../input/bahia_01_expand_bat.bin',
+ meridWindFile='../input/merid_local_bay_560x352.bin',
  hydrogThetaFile='../input/linear_temp_50zlev_560x352.bin',
+ hydrogSaltFile='../input/linear_salt_50zlev_560x352.bin',
  &

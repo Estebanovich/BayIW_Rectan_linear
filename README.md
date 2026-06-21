@@ -72,7 +72,32 @@ BayIW_Rectan_linear/
 
 ### Boundary conditions
 
-Open boundaries are applied on the south, west, and east edges using **Orlanski radiation** conditions. A sponge layer of 10 grid cells damps spurious reflections near the boundaries. Barotropic velocity balance is applied to maintain mass conservation.
+Open boundaries are applied on the south, west, and east edges using **Orlanski radiation**
+conditions; the **north edge is a closed wall** (coast at the head of the bay). Barotropic
+velocity balance is applied to maintain mass conservation.
+
+**Improved open-boundary treatment (`improve-open-boundaries` branch).** On the uniform 5 km
+grid the barotropic gravity wave (`c = √(gH) ≈ 75 m/s`) has a non-dimensional phase speed
+`c·Δt/Δx ≈ 0.45` cells/step — right at the Orlanski/AB-II stability limit (`CMAX < 0.5`,
+`pkg/obcs/orlanski_*.F`) — so radiation is marginal and partly reflective. Two coupled changes
+improve it:
+
+1. **`data.obcs`** — `CMAX 1.0 → 0.45` (the old value exceeded the AB-II stability limit),
+   `cvelTimeScale 1000 → 250 s` (track the fast wave), and the sponge is strengthened as a
+   backup absorber: `spongeThickness 10 → 30` cells with a gentler relaxation gradient
+   (`Vrelaxobcsbound 60 s`, `Vrelaxobcsinner 1200 s`).
+2. **Stretched-grid margins** (`input/make_stretched_grid.py`) — the outer 20 cells of each
+   *open* edge (S/E/W; the north is left untouched) grow geometrically (5 %/cell) from 5 km to
+   ~13 km. This (a) pushes the boundaries ~125 km farther from the bay per side, (b) adds a
+   dissipative coarse margin, and (c) drops the boundary `c·Δt/Δx` to ≈ 0.17, so Orlanski
+   radiates with margin. Domain extent grows to ~2952 × 1839 km; `Nx×Ny` (560×352),
+   bathymetry, T/S and wind are unchanged (T/S are horizontally uniform, the wind patch and the
+   bay sit in the untouched 5 km interior, and the stretched margins are deep ocean / coast far
+   from the bay).
+
+Run `input/make_stretched_grid.py` **after** the bathymetry notebook
+(`bahia_rectan_impar_func.ipynb`), since that notebook writes the uniform 5 km
+`*_dx.bin`/`*_dy.bin` that the script then stretches in place.
 
 ### Forcing
 

@@ -48,19 +48,20 @@
  cg2dMaxIters=1000,
  &
 
-# Time stepping parameters  -- ETAPA 2: reinicia desde pickup.0000007200, sin viento
+# Time stepping parameters  -- ETAPA 1: desde cero, forzada por viento
  &PARM03
- startTime=216000.,
- endTime=432000.,
- nIter0=7200,
+ startTime=0.,
+ endTime=216000.,
+ nIter0=0,
  deltaT=30.,
- chkptFreq=86400.,
+ pChkptFreq=216000.,
+ chkptFreq=0.,
  dumpFreq=900.,
  monitorFreq=600.,
  monitorSelect=2,
-# periodicExternalForcing=.TRUE.,
-# externForcingPeriod=1200.,
-# externForcingCycle=216000.,
+ periodicExternalForcing=.TRUE.,
+ externForcingPeriod=1200.,
+ externForcingCycle=216000.,
  &
 
 # Gridding parameters
@@ -82,5 +83,7 @@
 
  &PARM05
  bathyFile='../input/nobahia_01_expand_bat.bin',
+ meridWindFile='../input/merid_local_bay_560x352.bin',
  hydrogThetaFile='../input/linear_temp_50zlev_560x352.bin',
+ hydrogSaltFile='../input/linear_salt_50zlev_560x352.bin',
  &
