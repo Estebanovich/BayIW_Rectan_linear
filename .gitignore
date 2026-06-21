@@ -2,9 +2,8 @@
 *.data
 *.meta
 STDERR.*
+STDOUT.*
 mitgcmuv
-run_expand/STDOUT.*
-run_expand_nobay/STDOUT.*
 run_expand_nobay/statsMIT.txt
 compress_nc.sh
 lista_nc.txt
