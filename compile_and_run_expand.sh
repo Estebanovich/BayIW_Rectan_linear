@@ -2,6 +2,11 @@
 # Script modificado para compilar, limpiar y ejecutar el modelo MITgcm
 # con opción de usar MPI
 
+# NetCDF de Homebrew (necesario para que genmake2 habilite el paquete 'mnc';
+# sin esto el test de NetCDF falla con "ld: library not found for -lnetcdf"
+# y 'mnc' se deshabilita silenciosamente). Ajusta la ruta si usas otra instalacion.
+export NETCDF_ROOT=/opt/homebrew
+
 # --- Compilación en build ---
 echo "Accediendo al directorio 'build'..."
 cd build/ || { echo "No se pudo acceder al directorio 'build'."; exit 1; }
@@ -16,7 +21,10 @@ if [[ "$respuesta_clean" == [yY] ]]; then
 fi
 
 GENMAKE2_PATH="../../../tools/genmake2"
-BUILD_OPTIONS_PATH="../../../tools/build_options/darwin_arm64_gfortran"
+# Optfile para Apple Silicon (M3 Pro): gfortran + MPICH + NetCDF de Homebrew.
+# El '_esteban' enlaza -lnetcdff -lnetcdf y cae a nf-config; el oficial deja
+# 'mnc' sin la libreria Fortran de NetCDF.
+BUILD_OPTIONS_PATH="../../../tools/build_options/darwin_arm64_gfortran_esteban"
 
 # Preguntar si se desea compilar con MPI
 read -p "¿Desea compilar con MPI? [y/n]: " comp_mpi
@@ -53,7 +61,8 @@ cd ..
 read -p "¿Desea limpiar las carpetas run_expand y run_expand_nobay antes de correr el modelo? [y/n]: " respuesta_clean_global
 read -p "¿Desea ejecutar el modelo con MPI en ambas carpetas? [y/n]: " exec_mpi_global
 if [[ "$exec_mpi_global" == [yY] ]]; then
-    read -p "Ingrese el número de núcleos (ejemplo: 4): " np_global
+    # Debe coincidir con nPx*nPy de SIZE.h (actualmente 4*2 = 8)
+    read -p "Ingrese el número de núcleos (debe ser 8, = nPx*nPy de SIZE.h): " np_global
 fi
 
 # --- FASE 1: Limpieza y ejecución en 'run_expand' ---
